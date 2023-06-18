@@ -92,7 +92,7 @@ class Caching extends Base
         return true;
     }
 
-    public function reset()
+    public function reset(): bool
     {
         $expressions = array(
             '//system.webServer/caching/profiles/remove',

@@ -35,8 +35,10 @@ class UrlCompression extends Base
         return $this->set('dynamicCompressionBeforeCache', 'true');
     }
 
-    protected function set($name, $value)
+    protected function set($name, $value): bool
     {
-        return $this->xml->{'system.webServer'}->urlCompression[$name] = $value;
+        $this->xml->{'system.webServer'}->urlCompression[$name] = $value;
+
+        return true;
     }
 }

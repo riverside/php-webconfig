@@ -58,7 +58,7 @@ class CustomHeaders extends Base
         return true;
     }
 
-    public function reset()
+    public function reset(): bool
     {
         $expressions = array(
             '//system.webServer/httpProtocol/customHeaders/remove',

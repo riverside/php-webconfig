@@ -7,7 +7,7 @@ class HttpCompression extends Base
 {
     protected static $types = array('dynamic', 'static');
 
-    protected function add($type, $mimeType, $enabled=true)
+    protected function add($type, $mimeType, $enabled=true): bool
     {
         if (!in_array($type, self::$types))
         {
@@ -27,14 +27,16 @@ class HttpCompression extends Base
         }
         $child->addAttribute('mimeType', $mimeType);
         $child->addAttribute('enabled', $enabled ? 'true' : 'false');
+
+        return true;
     }
 
-    public function addDynamic($mimeType, $enabled=true)
+    public function addDynamic($mimeType, $enabled=true): bool
     {
         return $this->add('dynamic', $mimeType, $enabled);
     }
 
-    public function addStatic($mimeType, $enabled=true)
+    public function addStatic($mimeType, $enabled=true): bool
     {
         return $this->add('static', $mimeType, $enabled);
     }
