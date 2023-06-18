@@ -50,6 +50,11 @@ class Base
         return true;
     }
 
+    public function getXml()
+    {
+        return $this->xml;
+    }
+
     public function save($format = true): bool
     {
         if ($format)
