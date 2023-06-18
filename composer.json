@@ -1,0 +1,34 @@
+{
+    "name": "riverside/php-webconfig",
+    "description": "PHP SDK for managing the web.config file",
+    "type": "library",
+    "version": "1.0.0",
+    "keywords": ["php", "sdk", "web.config", "IIS"],
+    "homepage": "https://github.com/riverside/php-webconfig",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dimitar Ivanov",
+            "email": "biggie@abv.bg",
+            "homepage": "https://twitter.com/DimitarIvanov",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "ext-dom": "*",
+        "ext-json": "*",
+        "ext-simplexml": "*",
+        "php": ">=7.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "8"
+    },
+    "autoload": {
+        "psr-4": {
+            "PhpExpress\\": "src/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    }
+}
