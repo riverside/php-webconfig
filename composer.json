@@ -25,7 +25,12 @@
     },
     "autoload": {
         "psr-4": {
-            "PhpExpress\\": "src/"
+            "PhpWebConfig\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "PhpWebConfig\\Tests\\": "tests/"
         }
     },
     "scripts": {
