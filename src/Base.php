@@ -3,11 +3,22 @@ namespace PhpWebConfig;
 
 class Base
 {
+    /**
+     * @var string
+     */
     protected $filename = 'web.config';
 
-    protected $xml = null;
+    /**
+     * @var \SimpleXMLElement
+     */
+    protected $xml;
 
-    public function __construct($filename)
+    /**
+     * Base constructor.
+     *
+     * @param string $filename
+     */
+    public function __construct(string $filename)
     {
         $this->filename = $filename;
 
@@ -23,7 +34,11 @@ class Base
         $this->xml = new \SimpleXMLElement($dom->saveXML());
     }
 
-    protected static function removeNode($node): bool
+    /**
+     * @param \SimpleXMLElement $node
+     * @return bool
+     */
+    protected static function removeNode(\SimpleXMLElement $node): bool
     {
         $dom = dom_import_simplexml($node);
         $dom->parentNode->removeChild($dom);
@@ -31,7 +46,11 @@ class Base
         return true;
     }
 
-    protected function removeExpressions($expressions): bool
+    /**
+     * @param array $expressions
+     * @return bool
+     */
+    protected function removeExpressions(array $expressions): bool
     {
         foreach ($expressions as $expression)
         {
@@ -50,12 +69,19 @@ class Base
         return true;
     }
 
-    public function getXml()
+    /**
+     * @return \SimpleXMLElement
+     */
+    public function getXml(): \SimpleXMLElement
     {
         return $this->xml;
     }
 
-    public function save($format = true): bool
+    /**
+     * @param bool $format
+     * @return bool
+     */
+    public function save(bool $format = true): bool
     {
         if ($format)
         {
@@ -65,6 +91,9 @@ class Base
         return $this->xml->asXML($this->filename);
     }
 
+    /**
+     * @return string
+     */
     public function toString(): string
     {
         return $this->xml->asXML();
