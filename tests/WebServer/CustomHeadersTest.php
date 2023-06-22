@@ -67,6 +67,8 @@ class CustomHeadersTest extends TestCase
 
         $ch = new CustomHeaders($filename);
 
-        $this->assertFalse($ch->get('X-My-Header', 'add'), "get('X-My-Header', 'add') should return false.");
+        $this->expectException(\Exception::class);
+
+        $ch->get('X-My-Header', 'add');
     }
 }
