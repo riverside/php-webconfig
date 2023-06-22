@@ -3,42 +3,93 @@ namespace PhpWebConfig\WebServer;
 
 use PhpWebConfig\Base;
 
+/**
+ * Configures compression of static and dynamic content.
+ *
+ * @package PhpWebConfig\WebServer
+ */
 class UrlCompression extends Base
 {
-    public function disableDynamic()
+    /**
+     * Disables dynamic compression for URLs.
+     *
+     * @return UrlCompression
+     */
+    public function disableDynamic(): UrlCompression
     {
-        return $this->set('doDynamicCompression', 'false');
+        $this->set('doDynamicCompression', 'false');
+
+        return $this;
     }
 
-    public function disableStatic()
+    /**
+     * Disables static compression for URLs.
+     *
+     * @return UrlCompression
+     */
+    public function disableStatic(): UrlCompression
     {
-        return $this->set('doStaticCompression', 'false');
+        $this->set('doStaticCompression', 'false');
+
+        return $this;
     }
 
-    public function disableDynamicBeforeCache()
+    /**
+     * Disables dynamic compression before cache
+     *
+     * @return UrlCompression
+     */
+    public function disableDynamicBeforeCache(): UrlCompression
     {
-        return $this->set('dynamicCompressionBeforeCache', 'false');
+        $this->set('dynamicCompressionBeforeCache', 'false');
+
+        return $this;
     }
 
-    public function enableDynamic()
+    /**
+     * Enables the dynamic compression for URLs.
+     *
+     * @return UrlCompression
+     */
+    public function enableDynamic(): UrlCompression
     {
-        return $this->set('doDynamicCompression', 'true');
+        $this->set('doDynamicCompression', 'true');
+
+        return $this;
     }
 
-    public function enableStatic()
+    /**
+     * Enables static compression for URLs.
+     *
+     * @return UrlCompression
+     */
+    public function enableStatic(): UrlCompression
     {
-        return $this->set('doStaticCompression', 'true');
+        $this->set('doStaticCompression', 'true');
+
+        return $this;
     }
 
-    public function enableDynamicBeforeCache()
+    /**
+     * Enables dynamic compression before cache
+     *
+     * @return UrlCompression
+     */
+    public function enableDynamicBeforeCache(): UrlCompression
     {
-        return $this->set('dynamicCompressionBeforeCache', 'true');
+        $this->set('dynamicCompressionBeforeCache', 'true');
+
+        return $this;
     }
 
-    protected function set($name, $value): bool
+    /**
+     * Sets a given value as urlCompression attribute
+     *
+     * @param string $name
+     * @param $value
+     */
+    protected function set(string $name, $value): void
     {
         $this->xml->{'system.webServer'}->urlCompression[$name] = $value;
-
-        return true;
     }
 }

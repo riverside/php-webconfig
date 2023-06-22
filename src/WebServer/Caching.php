@@ -3,34 +3,89 @@ namespace PhpWebConfig\WebServer;
 
 use PhpWebConfig\Base;
 
+/**
+ * Configures output cache settings.
+ *
+ * @package PhpWebConfig\WebServer
+ */
 class Caching extends Base
 {
-    protected function set($key, $value)
+    /**
+     * Sets a given values as caching attribute
+     *
+     * @param string $key
+     * @param $value
+     */
+    protected function set(string $key, $value): void
     {
         $this->xml->{'system.webServer'}->caching[$key] = $value;
     }
 
-    public function setEnabled($value)
+    /**
+     * Specifies whether page output caching is enabled.
+     *
+     * @param bool $value
+     * @return Caching
+     */
+    public function setEnabled(bool $value): Caching
     {
-        $this->set('enabled', (bool) $value ? 'true' : 'false');
+        $this->set('enabled', $value ? 'true' : 'false');
+
+        return $this;
     }
 
-    public function setEnableKernelCache($value)
+    /**
+     * Specifies whether kernel caching is enabled.
+     *
+     * @param bool $value
+     * @return Caching
+     */
+    public function setEnableKernelCache(bool $value): Caching
     {
-        $this->set('enableKernelCache', (bool) $value ? 'true' : 'false');
+        $this->set('enableKernelCache', $value ? 'true' : 'false');
+
+        return $this;
     }
 
-    public function setMaxCacheSize($value)
+    /**
+     * Specifies the maximum size of the output cache.
+     *
+     * @param int $value
+     * @return Caching
+     */
+    public function setMaxCacheSize(int $value): Caching
     {
         $this->set('maxCacheSize', $value);
+
+        return $this;
     }
 
-    public function setMaxResponseSize($value)
+    /**
+     * Specifies the maximum response size that can be cached.
+     *
+     * @param int $value
+     * @return Caching
+     */
+    public function setMaxResponseSize(int $value): Caching
     {
         $this->set('maxResponseSize', $value);
+
+        return $this;
     }
 
-    public function add($extension, $policy=null, $kernelCachePolicy=null, $duration=null, $varyByHeaders=null, $varyByQueryString=null, $location=null): bool
+    /**
+     * Adds an output caching profile to the collection of output caching profiles.
+     *
+     * @param string $extension
+     * @param string|null $policy
+     * @param string|null $kernelCachePolicy
+     * @param string|null $duration
+     * @param string|null $varyByHeaders
+     * @param string|null $varyByQueryString
+     * @param string|null $location
+     * @return bool
+     */
+    public function add(string $extension, string $policy=null, string $kernelCachePolicy=null, string $duration=null, string $varyByHeaders=null, string $varyByQueryString=null, string $location=null): bool
     {
         if ($this->has($extension, 'add'))
         {
@@ -67,6 +122,11 @@ class Caching extends Base
         return true;
     }
 
+    /**
+     * Removes all references to output caching profiles from the output caching profile collection.
+     *
+     * @return bool
+     */
     public function clear(): bool
     {
         if ($this->has(null, 'clear'))
@@ -79,7 +139,13 @@ class Caching extends Base
         return true;
     }
 
-    public function remove($extension): bool
+    /**
+     * Removes a reference to an output caching profile from the output caching profile collection.
+     *
+     * @param string $extension
+     * @return bool
+     */
+    public function remove(string $extension): bool
     {
         if ($this->has($extension, 'remove'))
         {
@@ -92,6 +158,9 @@ class Caching extends Base
         return true;
     }
 
+    /**
+     * @return bool
+     */
     public function reset(): bool
     {
         $expressions = array(
@@ -103,7 +172,12 @@ class Caching extends Base
         return $this->removeExpressions($expressions);
     }
 
-    public function has($extension=null, $nodeName=null): bool
+    /**
+     * @param string|null $extension
+     * @param string|null $nodeName
+     * @return bool
+     */
+    public function has(string $extension=null, string $nodeName=null): bool
     {
         foreach ($this->profiles()->children() as $node)
         {
@@ -116,17 +190,32 @@ class Caching extends Base
         return false;
     }
 
-    protected function caching()
+    /**
+     * Configures output cache settings.
+     *
+     * @return \SimpleXMLElement
+     */
+    protected function caching(): \SimpleXMLElement
     {
         return $this->xml->{'system.webServer'}->caching;
     }
 
-    protected function profiles()
+    /**
+     * Contains a group of output cache settings
+     *
+     * @return \SimpleXMLElement
+     */
+    protected function profiles(): \SimpleXMLElement
     {
         return $this->caching()->profiles;
     }
 
-    protected function unmount($extension=null, $nodeName=null): bool
+    /**
+     * @param string|null $extension
+     * @param string|null $nodeName
+     * @return bool
+     */
+    protected function unmount(string $extension=null, string $nodeName=null): bool
     {
         foreach ($this->profiles()->children() as $node)
         {

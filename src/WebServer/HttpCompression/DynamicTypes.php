@@ -6,20 +6,26 @@ use PhpWebConfig\Base;
 class DynamicTypes extends Base
 {
     public function add()
-    {}
+    {
+        //TODO
+    }
 
-    protected function collection()
+    protected function collection(): \SimpleXMLElement
     {
         return $this->xml->{'system.webServer'}->httpCompression->dynamicTypes;
     }
 
     public function get()
-    {}
+    {
+        //TODO
+    }
 
-    public function has($mimeType, $nodeName=null)
-    {}
+    public function has(string $mimeType, string $nodeName=null): bool
+    {
+        //TODO
+    }
 
-    public function unmount($mimeType=null, $nodeName=null): bool
+    public function unmount(string $mimeType=null, string $nodeName=null): bool
     {
         $i = 0;
         foreach ($this->collection()->children() as $node)

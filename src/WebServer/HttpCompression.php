@@ -3,11 +3,28 @@ namespace PhpWebConfig\WebServer;
 
 use PhpWebConfig\Base;
 
+/**
+ * Configures HTTP compression settings for a Web server.
+ *
+ * @package PhpWebConfig\WebServer
+ */
 class HttpCompression extends Base
 {
+    /**
+     * @var array
+     */
     protected static $types = array('dynamic', 'static');
 
-    protected function add($type, $mimeType, $enabled=true): bool
+    /**
+     * Adds a MIME type to the collection of dynamic or static MIME types.
+     *
+     * @param string $type
+     * @param string $mimeType
+     * @param bool $enabled
+     * @return bool
+     * @throws \Exception
+     */
+    protected function add(string $type, string $mimeType, bool $enabled=true): bool
     {
         if (!in_array($type, self::$types))
         {
@@ -31,21 +48,44 @@ class HttpCompression extends Base
         return true;
     }
 
-    public function addDynamic($mimeType, $enabled=true): bool
+    /**
+     * Adds a MIME type to the collection of dynamic MIME types.
+     *
+     * @param string $mimeType
+     * @param bool $enabled
+     * @return bool
+     * @throws \Exception
+     */
+    public function addDynamic(string $mimeType, bool $enabled=true): bool
     {
         return $this->add('dynamic', $mimeType, $enabled);
     }
 
-    public function addStatic($mimeType, $enabled=true): bool
+    /**
+     * Adds a MIME type to the collection of static MIME types.
+     *
+     * @param string $mimeType
+     * @param bool $enabled
+     * @return bool
+     * @throws \Exception
+     */
+    public function addStatic(string $mimeType, bool $enabled=true): bool
     {
         return $this->add('static', $mimeType, $enabled);
     }
 
-    protected function get($type, $mimeType, $nodeName)
+    /**
+     * @param string $type
+     * @param string $mimeType
+     * @param string $nodeName
+     * @return string
+     * @throws \Exception
+     */
+    protected function get(string $type, string $mimeType, string $nodeName): string
     {
         if (!in_array($type, self::$types))
         {
-            return false;
+            throw new \Exception('Invalid type.');
         }
 
         if ($type == 'dynamic')
@@ -63,24 +103,43 @@ class HttpCompression extends Base
             }
         }
 
-        return false;
+        throw new \Exception('Node was not found.');
     }
 
-    public function getDynamic($mimeType, $nodeName)
+    /**
+     * @param string $mimeType
+     * @param string $nodeName
+     * @return string
+     * @throws \Exception
+     */
+    public function getDynamic(string $mimeType, string $nodeName): string
     {
         return $this->get('dynamic', $mimeType, $nodeName);
     }
 
-    public function getStatic($mimeType, $nodeName)
+    /**
+     * @param string $mimeType
+     * @param string $nodeName
+     * @return string
+     * @throws \Exception
+     */
+    public function getStatic(string $mimeType, string $nodeName): string
     {
         return $this->get('static', $mimeType, $nodeName);
     }
 
-    protected function has($type, $mimeType, $nodeName=null): bool
+    /**
+     * @param string $type
+     * @param string $mimeType
+     * @param string|null $nodeName
+     * @return bool
+     * @throws \Exception
+     */
+    protected function has(string $type, string $mimeType, string $nodeName=null): bool
     {
         if (!in_array($type, self::$types))
         {
-            return false;
+            throw new \Exception('Invalid type.');
         }
 
         if ($type == 'dynamic')
@@ -101,31 +160,60 @@ class HttpCompression extends Base
         return false;
     }
 
-    public function hasDynamic($mimeType, $nodeName=null): bool
+    /**
+     * @param string $mimeType
+     * @param string|null $nodeName
+     * @return bool
+     * @throws \Exception
+     */
+    public function hasDynamic(string $mimeType, string $nodeName=null): bool
     {
         return $this->has('dynamic', $mimeType, $nodeName);
     }
 
-    public function hasStatic($mimeType, $nodeName=null): bool
+    /**
+     * @param string $mimeType
+     * @param string|null $nodeName
+     * @return bool
+     * @throws \Exception
+     */
+    public function hasStatic(string $mimeType, string $nodeName=null): bool
     {
         return $this->has('static', $mimeType, $nodeName);
     }
 
-    protected function dynamicTypes()
+    /**
+     * Specifies configuration settings for dynamic compression.
+     *
+     * @return \SimpleXMLElement
+     */
+    protected function dynamicTypes(): \SimpleXMLElement
     {
         return $this->xml->{'system.webServer'}->httpCompression->dynamicTypes;
     }
 
-    protected function staticTypes()
+    /**
+     * Specifies configuration settings for static compression.
+     *
+     * @return \SimpleXMLElement
+     */
+    protected function staticTypes(): \SimpleXMLElement
     {
         return $this->xml->{'system.webServer'}->httpCompression->staticTypes;
     }
 
-    protected function unmount($type, $mimeType=null, $nodeName=null): bool
+    /**
+     * @param string $type
+     * @param string|null $mimeType
+     * @param string|null $nodeName
+     * @return bool
+     * @throws \Exception
+     */
+    protected function unmount(string $type, string $mimeType=null, string $nodeName=null): bool
     {
         if (!in_array($type, self::$types))
         {
-            return false;
+            throw new \Exception('Invalid type.');
         }
 
         if ($type == 'dynamic')
@@ -148,12 +236,24 @@ class HttpCompression extends Base
         return $i ? true : false;
     }
 
-    public function unmountDynamic($mimeType=null, $nodeName=null): bool
+    /**
+     * @param string|null $mimeType
+     * @param string|null $nodeName
+     * @return bool
+     * @throws \Exception
+     */
+    public function unmountDynamic(string $mimeType=null, string $nodeName=null): bool
     {
         return $this->unmount('dynamic', $mimeType, $nodeName);
     }
 
-    public function unmountStatic($mimeType=null, $nodeName=null): bool
+    /**
+     * @param string|null $mimeType
+     * @param string|null $nodeName
+     * @return bool
+     * @throws \Exception
+     */
+    public function unmountStatic(string $mimeType=null, string $nodeName=null): bool
     {
         return $this->unmount('static', $mimeType, $nodeName);
     }

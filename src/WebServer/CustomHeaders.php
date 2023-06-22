@@ -3,9 +3,21 @@ namespace PhpWebConfig\WebServer;
 
 use PhpWebConfig\Base;
 
+/**
+ * Configures custom response headers that are returned in responses from the Web server.
+ *
+ * @package PhpWebConfig\WebServer
+ */
 class CustomHeaders extends Base
 {
-    public function add($name, $value): bool
+    /**
+     * Adds a custom response header to the <customHeaders> collection.
+     * 
+     * @param string $name
+     * @param $value
+     * @return bool
+     */
+    public function add(string $name, $value): bool
     {
         if ($this->has($name, 'add'))
         {
@@ -19,7 +31,13 @@ class CustomHeaders extends Base
         return true;
     }
 
-    public function get($name, $type)
+    /**
+     * @param string $name
+     * @param string $type
+     * @return string
+     * @throws \Exception
+     */
+    public function get(string $name, string $type): string
     {
         foreach ($this->all()->children() as $node)
         {
@@ -29,10 +47,15 @@ class CustomHeaders extends Base
             }
         }
 
-        return false;
+        throw new \Exception('Header not found.');
     }
 
-    public function has($name, $type=null): bool
+    /**
+     * @param string $name
+     * @param string|null $type
+     * @return bool
+     */
+    public function has(string $name, string $type=null): bool
     {
         foreach ($this->all()->children() as $node)
         {
@@ -45,7 +68,13 @@ class CustomHeaders extends Base
         return false;
     }
 
-    public function remove($name): bool
+    /**
+     * Removes a reference to a custom response header from the <customHeaders> collection.
+     *
+     * @param string $name
+     * @return bool
+     */
+    public function remove(string $name): bool
     {
         if ($this->has($name, 'remove'))
         {
@@ -58,6 +87,9 @@ class CustomHeaders extends Base
         return true;
     }
 
+    /**
+     * @return bool
+     */
     public function reset(): bool
     {
         $expressions = array(
@@ -69,12 +101,20 @@ class CustomHeaders extends Base
         return $this->removeExpressions($expressions);
     }
 
-    protected function all()
+    /**
+     * @return \SimpleXMLElement
+     */
+    protected function all(): \SimpleXMLElement
     {
         return $this->xml->{'system.webServer'}->httpProtocol->customHeaders;
     }
 
-    protected function unmount($name, $type=null): bool
+    /**
+     * @param string $name
+     * @param string|null $type
+     * @return bool
+     */
+    protected function unmount(string $name, string $type=null): bool
     {
         foreach ($this->all()->children() as $node)
         {
