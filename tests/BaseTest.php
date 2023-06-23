@@ -15,7 +15,7 @@ class BaseTest extends TestCase
         <add name="X-Custom-Header" value="456"/>
         <add name="X-Frame-Options" value="SAMEORIGIN"/>
         <remove name="Via"/>
-        <remove name="X-Vevs"/>
+        <remove name="cf-ray"/>
       </customHeaders>
     </httpProtocol>
     <httpCompression>
