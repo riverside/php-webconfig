@@ -28,7 +28,7 @@ class HttpCompression extends Base
     {
         if (!in_array($type, self::$types))
         {
-            return false;
+            throw new \Exception('Invalid type.');
         }
 
         while ($this->has($type, $mimeType,'add'))
