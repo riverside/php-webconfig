@@ -35,6 +35,8 @@ class Base
     }
 
     /**
+     * Removes child from list of children
+     *
      * @param \SimpleXMLElement $node
      * @return bool
      */
